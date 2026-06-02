@@ -1,0 +1,13 @@
+﻿.dart_tool/
+.packages
+.pub/
+build/
+.idea/
+.vscode/
+*.log
+.env
+google-services.json
+GoogleService-Info.plist
+ios/Pods/
+android/.gradle/
+android/app/build/
