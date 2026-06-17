@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    Si estás sirviendo tu aplicación web en una ruta diferente a la raíz,
+    cambia el valor de href para reflejar la ruta base.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="SmartTrámites La Paz - Optimización digital de trámites administrativos">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="smarttramites">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>SmartTrámites</title>
+  <link rel="manifest" href="manifest.json">
+
+  <!-- 🔥 Configuración para sqflite_common_ffi_web -->
+  <script>
+    // Configurar SQLite WASM desde CDN antes de cargar Flutter
+    window.sqlite3InitModule = {
+      locateFile: function(file, scriptDirectory) {
+        return 'https://cdn.jsdelivr.net/npm/@sqlite.org/sqlite-wasm@3.46.0-build1/sqlite-wasm/jswasm/' + file;
+      }
+    };
+  </script>
+</head>
+<body>
+  <!--
+    Script de inicialización de Flutter con configuración personalizada
+    para soportar sqflite_common_ffi_web
+  -->
+  <script src="flutter_bootstrap.js" async></script>
+  
+  <script>
+    // Configuración del service worker para sqflite
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function(ev) {
+        // Registrar service worker para sqflite si existe
+        navigator.serviceWorker.register('sqflite_sw.js')
+          .then(function(registration) {
+            console.log('✅ sqflite Service Worker registrado:', registration.scope);
+          })
+          .catch(function(error) {
+            console.log('⚠️ sqflite Service Worker no disponible:', error);
+          });
+      });
+    }
+  </script>
+</body>
+</html>
